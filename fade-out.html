@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- Credit: https://stackoverflow.com/a/9334132 -->
+
+    <!-- ----------------- STYLE -------------------- -->
+    <style>
+      div {
+        border: 5px solid;
+        padding: 10px;
+      }
+
+      div:hover {
+        border-color: red;
+      }
+
+      .parent .child {
+        display: none;
+      }
+
+      .parent:hover .child {
+        display: block;
+        animation: fade-in 1s;
+      }
+
+      .parent:not(:hover) .child.did-fade-in {
+        display: block;
+        animation: fade-out 1s;
+      }
+
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fade-out {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+    </style>
+
+    <!-- --------------------- HTML ---------------------- -->
+    <div class="parent">
+      Parent
+      <div class="child">
+        Child
+      </div>
+    </div>
+
+    <!-- ---------------------- JS ------------------------ -->
+    <script>
+      // We need to keep track of faded in elements so we can apply fade out later in CSS
+      document.addEventListener('animationstart', function(e) {
+        if (e.animationName === 'fade-in') {
+          e.target.classList.add('did-fade-in')
+        }
+      })
+
+      document.addEventListener('animationend', function(e) {
+        if (e.animationName === 'fade-out') {
+          e.target.classList.remove('did-fade-in')
+        }
+      })
+    </script>
+  </body>
+</html>
