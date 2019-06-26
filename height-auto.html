@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      .container {
+        background-color: salmon;
+        height: auto;
+      }
+    </style>
+
+    <div class="container">
+      <button class="toggle-height">
+        Toggle
+      </button>
+      <br />
+      TEST
+      <br />
+      TEST
+      <br />
+      TEST
+      <br />
+      TEST
+      <br />
+      TEST
+      <br />
+      TEST
+      <br />
+      TEST
+      <br />
+      TEST
+      <br />
+      TEST
+      <br />
+      TEST
+      <br />
+      TEST
+      <br />
+      TEST
+      <br />
+      TEST
+      <br />
+      TEST
+    </div>
+
+    <script>
+      document.querySelector('button.toggle-height').onclick = () => {
+        let element = document.querySelector('.container')
+        if (!element.classList.contains('did-expand')) {
+          // From auto to 50px
+          element.style.height = getComputedStyle(element).height
+          element.style.transition = 'height 1s ease-in-out'
+          element.offsetHeight // force repaint
+          element.style.height = '50px'
+          element.classList.add('did-expand')
+        } else {
+          // From 50px to auto
+          let prevHeight = element.style.height
+          element.style.height = 'auto'
+          let endHeight = getComputedStyle(element).height
+          element.style.height = prevHeight
+          element.offsetHeight // force repaint
+          element.style.transition = 'height 1s ease-in-out'
+          element.style.height = endHeight
+          element.addEventListener(
+            'transitionend',
+            function transitionEnd(event) {
+              if (event.propertyName == 'height') {
+                element.style.transition = ''
+                element.style.height = 'auto'
+                element.removeEventListener('transitionend', transitionEnd, false)
+                element.classList.remove('did-expand')
+              }
+            },
+            false
+          )
+        }
+      }
+    </script>
+  </body>
+</html>
